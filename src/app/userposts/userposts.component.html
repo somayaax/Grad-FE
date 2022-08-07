@@ -1,0 +1,136 @@
+<div *ngIf="user">
+<section class="py-3 profile-info bg-primary">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-3">
+                <div class="profile-pic m-auto pt-4 text-center ">
+                    <img src="../../assets/f.png" alt="" width="100" *ngIf="user.gender === 'female'"
+                        class="rounded mb-2">
+                    <img src="../../assets/m.png" alt="" width="100" *ngIf="user.gender === 'male'"
+                        class="rounded mb-2">
+                </div>
+                <div class="text-center text-capitalize fw-bold" style="font-size:30px; color: grey;">{{user.firstName}}
+                    {{user.lastName}}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <table class="table mt-3">
+                    <tbody>
+                        <tr>
+                            <hr>
+                            <th class="fw-normal">Email</th>
+                            <td class="fw-bold">{{user.email}}</td>
+                        </tr>
+                        <tr>
+                            <hr>
+                            <th class="fw-normal">Faculty</th>
+                            <td class="fw-bold">faculty of {{user.faculty}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="user-posts" *ngIf="losses" class="m-auto bg-primary">
+    <div class="w-50 pb-4 m-auto">
+        <div class="count d-flex justify-content-around text-center">
+            <div class="lost">
+                <span class="fs-2">{{losses.length}}</span>
+                <p>lost items</p>
+            </div>
+            <div class="lost">
+                <span class="fs-2">{{founds.length}}</span>
+                <p>found items</p>
+            </div>
+        </div>
+        <div class="choose d-flex justify-content-around text-center">
+            <div class="w-50 text-center">
+                <button class="btn btn-dark" (click)="viewLosses()"> View Losses </button>
+            </div>
+            <div class="w-50 text-center">
+                <button class="btn btn-dark" (click)="viewFound()">View Found</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="lost" class="pb-5 bg-primary" *ngIf="lossClicked">
+    <div class="w-75 m-auto">
+        <h2 class="text-center text-white">Losses Reports</h2>
+        <hr class="text-white mb-5">
+        <div class="row">
+            <div class="col-md-4 my-1" *ngFor="let post of losses.reverse()">
+                <div class="card post shadow-lg">
+                    <img src="{{post.image}}" width="100%" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{post.title}}</h5>
+                        <p class="card-text"> <span>description: </span>{{post.desc}}</p>
+                        <p class="card-text"> <span>location: </span>{{post.location}}</p>
+                        <div class="buttons d-flex justify-content-around align-items-center">
+                            <button class="btn btn-info" style="width: 45%;"
+                                routerLink="/loss/foundIt/sendEmail/{{post._id}}">I found this item</button>
+                            <button class="btn btn-danger" (click)="report(post._id)" style="width: 45%;">Report post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="report position-fixed w-100 top-0 bottom-0 h-100" *ngIf="reportClicked">
+        <div class="bg-black p-4 rounded-3">
+            <div (click)="exit()" style="cursor: pointer;" class="text-end mb-2">
+                <fa-icon class="text-white" [icon]="faX"></fa-icon>
+            </div>
+            <h2 class="text-center text-white pb-4">Are you sure you want to report this post?</h2>
+            <form class="w-100" (ngSubmit)="reportLoss(postClicked,reportForm)" [formGroup]="reportForm">
+                <label class="text-white" for="reportComment">report comment:</label>
+                <input type="text" id="reportComment" class="mt-1 mb-2 form-control" formControlName='reportComment'
+                    placeholder="type the reason">
+                <button [disabled]="reportForm.invalid" class="mt-1 btn btn-danger">submit</button>
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section id="found" class="pb-5 bg-primary" *ngIf="foundClicked">
+    <div class="w-75 m-auto">
+        <h2 class="text-center text-white">Found Reports</h2>
+        <hr class="text-white mb-5">
+        <div class="row">
+            <div *ngFor="let post of founds.reverse()" class="mb-4 col-md-6">
+                <div class="post item rounded-3 shadow-lg">
+                    <p class="fs-3"><span class="fw-bold">found item: </span>{{post.title}}</p>
+                    <p><span class="fw-bold">found at: </span> {{post.location}}</p>
+                    <div class="buttons d-flex flex-md-row flex-sm-column justify-content-around">
+                        <button style="width: 45%" class="btn btn-info"
+                            routerLink="/found/mine/sendEmail/{{post._id}}">this {{post.title}} belongs to
+                            me</button>
+                        <button class="btn btn-danger"  (click)="report(post._id)"  style="width: 45%">Report post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="report position-fixed w-100 top-0 bottom-0 h-100" *ngIf="reportClicked">
+        <div class="bg-black p-4 rounded-3">
+            <div (click)="exit()" style="cursor: pointer;" class="text-end mb-2">
+                <fa-icon class="text-white" [icon]="faX"></fa-icon>
+            </div>
+            <h2 class="text-center text-white pb-4">Are you sure you want to report this post?</h2>
+            <form class="w-100" (ngSubmit)="reportFound(postClicked,reportForm)" [formGroup]="reportForm">
+                <label class="text-white" for="reportComment">report comment:</label>
+                <input type="text" id="reportComment" class="mt-1 mb-2 form-control" formControlName='reportComment'
+                    placeholder="type the reason">
+                <button [disabled]="reportForm.invalid" class="mt-1 btn btn-danger">submit</button>
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</div>

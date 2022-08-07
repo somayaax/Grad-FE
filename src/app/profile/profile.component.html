@@ -1,0 +1,111 @@
+<div class="bg-primary">
+    <div class="profile-pic m-auto pt-4 text-center ">
+        <img src="../../assets/f.png" alt="" width="100" *ngIf="user.gender === 'female'" class="rounded mb-2">
+        <img src="../../assets/m.png" alt="" width="100" *ngIf="user.gender === 'male'" class="rounded mb-2">
+    </div>
+    <!-- only if the profile isn't completed(complete form) -->
+    <div *ngIf="!user.completed" class="w-50 m-auto pb-5">
+        <button class="btn btn-danger"> complete profile first!</button>
+        <div class="complete-form">
+            <form [formGroup]="CompleteForm" (ngSubmit)="complete(CompleteForm)">
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>{{error}}
+                </div>
+                <div class="my-2">
+                    <label for="firstName">firstName</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                    <div class="text-danger"
+                        *ngIf="CompleteForm.get('firstName')?.errors!=null && CompleteForm.get('firstName')?.touched">
+                        <p class="mb-0" *ngIf="CompleteForm.get('firstName')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> firstName required
+                        </p>
+                        <p class="mb-0" *ngIf="CompleteForm.get('firstName')?.errors?.['firstName']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> firstName invalid
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="lastName">lastName</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                    <div class="text-danger"
+                        *ngIf="CompleteForm.get('lastName')?.errors!=null && CompleteForm.get('lastName')?.touched">
+                        <p class="mb-0" *ngIf="CompleteForm.get('lastName')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> lastName required
+                        </p>
+                        <p class="mb-0" *ngIf="CompleteForm.get('lastName')?.errors?.['lastName']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> lastName invalid
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="phone">phone</label>
+                    <input type="text" class="form-control" id="phone" formControlName="phone">
+                    <div class="text-danger"
+                        *ngIf="CompleteForm.get('phone')?.errors!=null && CompleteForm.get('phone')?.touched">
+                        <p class="mb-0" *ngIf="CompleteForm.get('phone')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> phone required
+                        </p>
+                        <p class="mb-0" *ngIf="CompleteForm.get('phone')?.errors?.['phone']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> phone should be 11 digits
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="faculty">choose your faculty</label>
+                    <br>
+                    <select class="custon-select" name="faculty" id="faculty" formControlName="faculty">
+                        <option value="eng">faculty of engineering</option>
+                        <option value="med">faculty of medicine</option>
+                        <option value="islamic theology">Faculty of Islamic theology in Cairo</option>
+                        <option value="arabic">Faculty of Arabic language in Cairo</option>
+                        <option value="dent"> Faculty of Dentistry ( for girls) in Cairo</option>
+                        <option value="CS">computer science</option>
+                    </select>
+                    <div class="text-danger"
+                        *ngIf="CompleteForm.get('faculty')?.errors!=null && CompleteForm.get('faculty')?.touched">
+                        <p class="mb-0" *ngIf="CompleteForm.get('faculty')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> faculty required
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2 mx-auto text-center">
+                    <button [disabled]="CompleteForm.invalid" class="btn py-2" type="submit">save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- users profile info -->
+    <section class="py-3 profile-info" *ngIf="user.completed">
+        <div class="container">
+            <div class="text-center justify-content-center fw-bold" style="font-size:39px; color: grey;">Profile Info
+            </div>
+            <table class="table mx-2 w-75">
+                <tbody class="fw-light">
+                    <tr>
+                        <hr>
+                        <th>Name</th>
+                        <td class="fw-bold text-capitalize">{{user.firstName}} {{user.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <hr>
+                        <th>Phone</th>
+                        <td class="fw-bold">{{phone}}</td>
+                    </tr>
+                    <tr>
+                        <hr>
+                        <th>Email</th>
+                        <td class="fw-bold">{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <hr>
+                        <th>Faculty</th>
+                        <td class="fw-bold">faculty of {{user.faculty}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<div *ngIf="user.completed">
+    <app-yourposts></app-yourposts>
+</div>

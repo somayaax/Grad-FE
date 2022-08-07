@@ -1,0 +1,78 @@
+<section class="bg-primary">
+    <div class="container py-4">
+        <div class="row align-items-start">
+            <div *ngIf="yourPost" class=" mypost col-md-3 pe-5">
+                <h3 class="">Your post</h3>
+                <div class="card shadow-lg">
+                    <img src="{{yourPost.image}}" width="100%" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <hr>
+                        <h5 class="card-title">{{yourPost.title}}</h5>
+                        <p class="card-text"> <span>description: </span>{{yourPost.desc}}</p>
+                        <p class="card-text"> <span>location: </span>{{yourPost.location}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 justify-content-center align-items-center  ps-5"  *ngIf="posts.length == 0">
+                <div class="h-100 ">
+                    <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+                        <h2 class="mb-4">
+                            No Matches Found
+                        </h2>
+                        <a class="text-black btn btn-info mb-4" routerLink="/losses">Search by name instead</a>
+                        <p class="fs-4">or try reloading the page</p>
+                    </div>
+                </div>
+            </div>
+    <!-- <div class="flex-column">             -->
+        <div class="col-md-2"><div *ngIf="posts.length>0">
+            <h3>Search results:</h3>
+        </div></div>
+            <div class="col-md-4 pt-5 justify-content-center align-items-center  ps-5" *ngIf="posts.length>0">
+                <div class="row flex-column ">
+                    <div class="item"*ngFor="let post of posts; let i = index;">
+                        
+                        <div class="post bg-primary py-3 px-2 mx-auto rounded-3 mb-2 shadow-lg">
+                            <h3 class="text-capitalize">
+                                <a (click)="viewUserLoss(post.userID)">
+                                    {{post.firstName}} {{post.lastName}}
+                                </a>
+                            </h3>
+                            <img src={{post.img}} class="" alt="lost item" width="100%">
+                            <p class="fs-3"><span class="fw-bold">lost item: </span>{{post.title}}</p>
+                            <p><span class="fw-bold">description: </span> {{post.desc}}</p>
+                            <p><span class="fw-bold">lost at: </span> {{post.location}}</p>
+                            <div class="buttons d-flex justify-content-around align-items-center">
+                                <button [disabled]="getCurrentUser()==post.userID" class="btn btn-danger"
+                                    style="width: 45%;" (click)="report(post.postID)">Report post</button>
+                                <button [disabled]="getCurrentUser()==post.userID" class="btn btn-info" style="width: 45%;"
+                                    routerLink="/loss/foundIt/sendEmail/{{post.postID}}">I have your item</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div>
+
+               </div>
+            </div>
+        </div>
+    </div>
+    <div class="report position-fixed w-100 top-0 bottom-0 h-100" *ngIf="reportClicked">
+        <div class="bg-black p-4 rounded-3">
+            <div (click)="exit()" style="cursor: pointer;" class="text-end mb-2">
+                <fa-icon class="text-white" [icon]="faX"></fa-icon>
+            </div>
+            <h2 class="text-center text-white pb-4">Are you sure you want to report this post?</h2>
+            <form class="w-100" (ngSubmit)="reportLoss(postClicked,reportForm)" [formGroup]="reportForm">
+                <label class="text-white" for="reportComment">report comment:</label>
+                <input type="text" id="reportComment" class="mt-1 mb-2 form-control" formControlName='reportComment'
+                    placeholder="type the reason">
+                <button [disabled]="reportForm.invalid" class="mt-1 btn btn-danger">submit</button>
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

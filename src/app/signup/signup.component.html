@@ -1,0 +1,78 @@
+<div class="row align-items-center">
+    <div class="col-md-6 my-3">
+        <div class=""><h2 class="text-center">Sign Up</h2></div>
+        <div class="register-form">
+            <form [formGroup]="signupForm" (ngSubmit)="saveUser(signupForm)">
+                <!-- shows if there is an error adter clicking submit -->
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                </div>
+                <div class="my-2">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email">
+                    <!-- check for validation in email -->
+                    <div class="text-danger" *ngIf="signupForm.get('email')?.errors!=null && signupForm.get('email')?.touched">
+                        <p class="mb-0" *ngIf="signupForm.get('email')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> email required
+                        </p>
+                        <p class="mb-0" *ngIf="signupForm.get('email')?.errors?.['email']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> email invalid
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="password">password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password">
+                    <div class="text-danger"
+                        *ngIf="signupForm.get('password')?.errors!=null && signupForm.get('password')?.touched">
+                        <p class="mb-0" *ngIf="signupForm.get('password')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> password required
+                        </p>
+                        <p class="mb-0" *ngIf="signupForm.get('password')?.errors?.['pattern']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> password must contain 10char at least
+                            one uppercase letter, lowercase letter, digit and special character
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="confirmPassword">confirm password</label>
+                    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+                    <div class="text-danger"
+                        *ngIf="signupForm.get('confirmPassword')?.errors!=null && signupForm.get('confirmPassword')?.touched">
+                        <p class="mb-0" *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> password confirmation required
+                        </p>
+                        <p class="mb-0" *ngIf="signupForm.get('confirmPassword')?.errors?.['pattern']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> password must contain at least
+                            one uppercase letter, lowercase letter, digit and special character
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2 gender">
+                    <p class="mb-0">Gender</p>
+                    <input type="radio" id="male" value="male" formControlName="gender">
+                    <label for="male" class="ps-2">male</label><br>
+                    <input type="radio" id="female" value="female" formControlName="gender">
+                    <label for="female" class="ps-2">female</label><br>
+                    <div class="text-danger"
+                        *ngIf="signupForm.get('gender')?.errors!=null && signupForm.get('gender')?.touched">
+                        <p class="mb-0" *ngIf="signupForm.get('gender')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> choose gender
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2 mx-auto text-center">
+                    <button [disabled]="signupForm.invalid" class="btn py-2 " type="submit">sign up</button>
+                </div>
+            </form>
+            <div class="redirect text-center mt-3">
+                <p class="mb-0">already have an account?</p>
+                <a routerLink="/signin">Sign In</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bg"></div>
+    </div>
+</div>
+

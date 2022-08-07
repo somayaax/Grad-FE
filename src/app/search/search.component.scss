@@ -1,0 +1,26 @@
+@import '../../styles.scss';
+@import '../alllosses/alllosses.component.scss';
+.card{
+    height: 100%;
+    h5{
+        font-size: 1.5rem;
+    }
+    span{
+        font-weight: bold;
+        padding-right: 5px;
+    }
+}
+.card-img-top{
+    object-fit: contain;
+    height: 100%;
+}
+
+.post{
+    h3{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+.mypost{
+    border-right: 1px solid #000;
+}

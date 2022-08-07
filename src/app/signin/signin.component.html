@@ -1,0 +1,47 @@
+<div class="row align-items-center">
+    <div class="col-md-6 my-3">
+        <div class=""><h2 class="text-center">Sign In</h2></div>
+        <div class="register-form py-5">
+            <form [formGroup]="signinForm" (ngSubmit)="signin(signinForm)">
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>{{error}}
+                </div>
+                <div class="my-2">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" formControlName="email">
+                    <div class="text-danger" *ngIf="signinForm.get('email')?.errors!=null && signinForm.get('email')?.touched">
+                        <p class="mb-0" *ngIf="signinForm.get('email')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> email required
+                        </p>
+                        <p class="mb-0" *ngIf="signinForm.get('email')?.errors?.['email']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> email invalid
+                        </p>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <label for="password">password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password">
+                    <div class="text-danger"
+                        *ngIf="signinForm.get('password')?.errors!=null && signinForm.get('password')?.touched">
+                        <p class="mb-0" *ngIf="signinForm.get('password')?.errors?.['required']">
+                            <fa-icon [icon]="faCircleExclamation"></fa-icon> password required
+                        </p>
+                    </div>
+                </div>
+                <!-- <div class="forgot my-2 text-end">
+                    <a routerLink="">Forgot password?</a>
+                </div> -->
+                <div class="my-2 mx-auto text-center">
+                    <button [disabled]="signinForm.invalid" class="btn py-2" type="submit">sign in</button>
+                </div>
+            </form>
+            <div class="redirect text-center mt-3">
+                <p class="mb-0">Dont have an account?</p>
+                <a routerLink="/signup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bg"></div>
+    </div>
+</div>

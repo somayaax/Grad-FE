@@ -1,0 +1,30 @@
+@import '../../styles.scss';
+#user{
+    // background-image: url(../../assets/bg-2.gif);
+    .choose{
+        .col-6{
+            padding: 0 !important;
+        }
+    }
+}
+#lost, #found{
+    // background-image: url(../../assets/bg-2.gif);
+    h2{
+        font-size: 3rem;
+    }
+    .card{
+        background-image: url(../../assets/bg-2.gif);
+        height: 100%;
+        h5{
+            font-size: 1.5rem;
+        }
+        span{
+            font-weight: bold;
+            padding-right: 5px;
+        }
+    }
+    .card-img-top{
+        object-fit: contain;
+        height: 100%;
+    }
+}

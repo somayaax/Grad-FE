@@ -1,0 +1,22 @@
+<div class="container py-5" *ngIf="post">
+    <div class="row align-items-center">
+        <div class="col-md-6 text" >
+            <h2 class="">Are you sure you found this item?</h2>
+            <p class="fs-2 py-4">this item was lost by <span class="fw-bold text-capitalize" (click)="viewUserLoss(post.lostBy._id)">{{post.lostBy.firstName}} {{post.lostBy.lastName}}</span></p>
+            <p class="text-danger fs-4">we will send your Email and phone number to {{post.lostBy.firstName}} {{post.lostBy.lastName}}</p>
+            <p class="pt-5" *ngIf="!clicked">Do you agree?</p>
+            <button class="btn btn-dark" *ngIf="!clicked" (click)="sendEmail(post._id,getCurrentUser())">I agree</button>           
+            <div *ngIf="clicked">
+                <p class="py-2 fs-2"><fa-icon class="text-success" [icon]="faCheckCircle"></fa-icon> Email Sent Successfully</p>
+            </div> 
+        </div>
+        <div class="col-md-6">
+            <div class="post bg-primary p-4 mx-auto rounded-3 shadow-lg">
+                <img src={{post.image}} class="" alt="lost item" width="100%">
+                <p class="fs-3"><span class="fw-bold">lost item: </span>{{post.title}}</p>
+                <p><span class="fw-bold">description: </span> {{post.desc}}</p>
+                <p><span class="fw-bold">lost at: </span> {{post.location}}</p>
+            </div>
+        </div>
+    </div>
+</div>

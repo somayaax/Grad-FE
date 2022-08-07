@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Roboto:ital,wght@1,300&family=Ubuntu+Mono&display=swap');/* You can add global styles to this file, and also import other style files */
+$bgc:#212529;
+$txt:#212529;
+$bgc-light:#FCFAF3;
+$txt-mute:rgb(187, 178, 178);
+body{
+    font-family: 'Nunito', sans-serif;
+
+}
+
+.bg-primary{
+    background-image: url(./assets/bg-2.gif);
+}
+.bg-sec{
+    // background-image: url(./assets/bg-footer.gif);
+    background-image: url(./assets/bg-footer.jpeg);
+}
+.bg-lighter{
+    background-image: url(./assets/bg-footer.gif);
+}
+.bg-other{
+    // background-image: url(./assets/bg-footer.gif);
+    // background-image: url(./assets/bg-footer.jpeg);
+    background-color: #e1ca96;
+}

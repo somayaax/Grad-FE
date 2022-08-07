@@ -1,0 +1,69 @@
+<div class="bg-primary">
+    <section id="user" class="">
+        <div class="pt-5 pb-5">
+            <div class="user-info rounded-3 shadow-lg w-50 m-auto pb-1">
+                <div class="count d-flex justify-content-around text-center">
+                    <div class="lost">
+                        <span class="fs-2">{{lost.length}}</span>
+                        <p>lost items</p>
+                    </div>
+                    <div class="lost">
+                        <span class="fs-2">{{found.length}}</span>
+                        <p>found items</p>
+                    </div>
+                </div>
+                <div class="choose d-flex justify-content-around text-center">
+                    <div class="w-50 text-center">
+                        <button class="btn btn-dark" (click)="viewLosses()"> View Losses </button>
+                    </div>
+                    <div class="w-50 text-center">
+                        <button class="btn btn-dark" (click)="viewFound()">View Found</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="lost" class="pb-5 " *ngIf="lossClicked">
+        <div class="w-75 m-auto">
+            <h2 class="text-center text-white">Losses Reports</h2>
+            <hr class="text-white mb-5">
+            <div class="row">
+                <div class="col-md-4 my-3" *ngFor="let post of lost.reverse()">
+                    <div class="card post shadow-lg">
+                        <img src="{{post.image}}" width="100%" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{post.title}}</h5>
+                            <p class="card-text"> <span>description: </span>{{post.desc}}</p>
+                            <p class="card-text"> <span>location: </span>{{post.location}}</p>
+                            <div class="buttons">
+                                <a class="btn btn-danger" (click)="deleteLoss(post._id)">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="found" class="pb-5 " *ngIf="foundClicked">
+        <div class="w-75 m-auto">
+            <h2 class="text-center text-white">Found Reports</h2>
+            <hr class="text-white mb-5">
+            <div class="row">
+                <div class="col-md-4 my-3" *ngFor="let post of found.reverse()">
+                    <div class="card post shadow-lg">
+                        <img src="{{post.image}}" width="100%" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{post.title}}</h5>
+                            <p class="card-text"> <span>description: </span>{{post.desc}}</p>
+                            <p class="card-text"> <span>location: </span>{{post.location}}</p>
+                            <div class="buttons">
+                                <a class="btn btn-danger" (click)="deleteFound(post._id)">Delete</a>
+                                <a class="ms-1 btn btn-primary" (click)="searchInLosses(post._id)" >Search in losses By image</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

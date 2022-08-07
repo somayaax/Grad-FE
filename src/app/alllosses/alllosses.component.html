@@ -1,0 +1,54 @@
+
+<div class="search py-5 bg-primary">
+    <h3 class="text-center">Search in losses</h3>
+    <input type="text" [(ngModel)]="term" class="searchTerm" placeholder="" class="form-control w-50 m-auto">
+</div>
+<section id="losses" *ngIf="losses" class="bg-primary">
+    <div class="container">
+        <div class="row">
+            <div style="height:30vh" class="text-center" *ngIf="losses.length == 0">
+                <p class="fs-3 fw-bold">
+                    No posts yet
+                </p>
+            </div>
+            <div class="col-md-6 mb-4" *ngFor="let post of losses.reverse() | filter: term">
+                <div class="post bg-primary p-4 mx-auto rounded-3 shadow-lg" style="width: 70%;">
+                    <h3 class="text-capitalize">
+                        <a (click)="viewUserLoss(post.lostBy._id)">
+                            {{post.lostBy.firstName}} {{post.lostBy.lastName}}
+                        </a>
+                    </h3>
+                    <div class="image">
+                        <img src={{post.image}} class="" alt="lost item" width="100%">
+                    </div>
+                    <p class="fs-3"><span class="fw-bold">lost item: </span>{{post.title}}</p>
+                    <p><span class="fw-bold">description: </span> {{post.desc}}</p>
+                    <p><span class="fw-bold">lost at: </span> {{post.location}}</p>
+                    <div class="buttons d-flex justify-content-around align-items-center">
+                        <button [disabled]="getCurrentUser()==post.lostBy._id" class="btn btn-danger"
+                            style="width: 45%;" (click)="report(post._id)">Report post</button>
+                        <button [disabled]="getCurrentUser()==post.lostBy._id" class="btn btn-info" style="width: 45%;"
+                            routerLink="/loss/foundIt/sendEmail/{{post._id}}">I found this item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="report position-fixed w-100 top-0 bottom-0 h-100" *ngIf="reportClicked">
+        <div class="bg-black p-4 rounded-3">
+            <div (click)="exit()" style="cursor: pointer;" class="text-end mb-2">
+                <fa-icon class="text-white" [icon]="faX"></fa-icon>
+            </div>
+            <h2 class="text-center text-white pb-4">Are you sure you want to report this post?</h2>
+            <form class="w-100" (ngSubmit)="reportLoss(postClicked,reportForm)" [formGroup]="reportForm">
+                <label class="text-white" for="reportComment">report comment:</label>
+                <input type="text" id="reportComment" class="mt-1 mb-2 form-control" formControlName='reportComment'
+                    placeholder="type the reason">
+                <button [disabled]="reportForm.invalid" class="mt-1 btn btn-danger">submit</button>
+                <div class="text-danger" *ngIf="error">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

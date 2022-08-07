@@ -1,0 +1,86 @@
+<section id="report" class="bg-primary">
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <div class="bg-white my-5 m-auto ">
+                <div *ngIf="!submitted">
+                    <section id="lost-header">
+                        <div class="text-center">
+                            <h4>found an item?</h4>
+                            <button class="btn btn-green mt-2 mb-4" routerLink="/losses"> search in lost items</button>
+                            <p class="fs-3">or report what you found here <fa-icon [icon]="faArrowDown"></fa-icon>
+                            </p>
+                        </div>
+                    </section>
+                    <section class="lost-form container">
+                        <form [formGroup]="foundForm" (ngSubmit)="found(foundForm)">
+                            <div class="text-danger" *ngIf="error">
+                                <fa-icon [icon]="faCircleExclamation"></fa-icon> {{error}}
+                            </div>
+                            <div class="my-2">
+                                <label for="title">title</label>
+                                <input type="text" class="form-control" id="title" formControlName="title"
+                                    placeholder="title of the item ex:watch">
+                                <div class="text-danger"
+                                    *ngIf="foundForm.get('title')?.errors!=null && foundForm.get('title')?.touched">
+                                    <p class="mb-0" *ngIf="foundForm.get('title')?.errors?.['required']">
+                                        <fa-icon [icon]="faCircleExclamation"></fa-icon> title required
+                                    </p>
+                                    <p class="mb-0" *ngIf="foundForm.get('title')?.errors?.['title']">
+                                        <fa-icon [icon]="faCircleExclamation"></fa-icon> title invalid
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="my-2">
+                                <label for="desc">description</label>
+                                <input type="text" class="form-control" id="desc" formControlName="desc"
+                                    placeholder="describe it ex:black and silver">
+                                <div class="text-danger"
+                                    *ngIf="foundForm.get('desc')?.errors!=null && foundForm.get('desc')?.touched">
+                                    <p class="mb-0" *ngIf="foundForm.get('desc')?.errors?.['required']">
+                                        <fa-icon [icon]="faCircleExclamation"></fa-icon> desc required
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="my-2">
+                                <label for="location">location</label>
+                                <input type="text" class="form-control" id="location"
+                                    placeholder="approximate location ex:near the cafeteria" formControlName="location">
+                                <div class="text-danger"
+                                    *ngIf="foundForm.get('location')?.errors!=null && foundForm.get('location')?.touched">
+                                    <p class="mb-0" *ngIf="foundForm.get('location')?.errors?.['required']">
+                                        <fa-icon [icon]="faCircleExclamation"></fa-icon>location required
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="my-2">
+                                <label for="image">image</label>
+                                <input type="file" class="form-control" id="image" name="myImage" accept="image/*"
+                                    formControlName="image" (change)="selectImage($event)">
+                                <div class="text-danger"
+                                    *ngIf="foundForm.get('image')?.errors!=null && foundForm.get('image')?.touched">
+                                    <p class="mb-0" *ngIf="foundForm.get('image')?.errors?.['required']">
+                                        <fa-icon [icon]="faCircleExclamation"></fa-icon>image required
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="my-2 mx-auto text-center">
+                                <button [disabled]="foundForm.invalid" class="btn py-2 " type="submit">submit</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div class="done" *ngIf="submitted">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <h2>
+                            <fa-icon class="text-success" [icon]="faCheckCircle"></fa-icon> Done
+                        </h2>
+                        <p>your post has been added</p>
+                        <a (click)="resubmit()">add another post</a>
+                        <button class="btn btn-success my-3" routerLink="/profile">Go to your posts</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
